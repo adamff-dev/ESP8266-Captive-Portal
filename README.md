@@ -1,5 +1,5 @@
 # ESP8266 WiFi Captive Portal
-WiFi captive portal for NodeMCU (ESP8266 Module) with DNS spoofing.
+WiFi captive portal for the NodeMCU (ESP8266 Module) with DNS spoofing.
 
 <b>Warning!</b> Your saved passwords will disappear when you restart/power off the ESP8266.
 
