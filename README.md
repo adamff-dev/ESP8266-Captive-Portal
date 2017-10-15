@@ -16,4 +16,4 @@ The internal LED will notify us when a password is entered.
 <h2>"/Pass":</h2>
 <img width="225" height="385" src="https://raw.githubusercontent.com/BlueArduino20/ESP8266_WiFi_Captive_Portal/master/src/3_Pass.jpg" title="Pass">
 
-<b>Note:</b> If you want to see the stored passwords go to "yourcurrentwebsite.com<b>/pass</b>"
+<b>Note:</b> If you want to see the stored passwords go to "yourcurrentwebsite.com<b>/pass</b>" or "10.10.10.1<b>/pass</b>"
