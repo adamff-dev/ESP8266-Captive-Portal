@@ -11,11 +11,17 @@ The internal LED will notify us, blinking 5 times, when a password is received.
 
 # Screenshots
 
-<h2>"/Index":</h2>
-<img width="225" height="385" src="https://raw.githubusercontent.com/BlueArduino20/ESP8266_WiFi_Captive_Portal/master/src/1_Index.jpg" title="Index">
+<table>
+  <tr>
+    <th>10.10.10.1/index</th>
+    <th>10.10.10.1/post</th> 
+    <th>10.10.10.1/creds</th>
+  </tr>
+  <tr>
+    <td><img width="225" height="385" src="https://raw.githubusercontent.com/BlueArduino20/ESP8266_WiFi_Captive_Portal/master/src/1_Index_2.jpg" title="Index"></td>
+    <td><img  width="225" height="385" src="https://raw.githubusercontent.com/BlueArduino20/ESP8266_WiFi_Captive_Portal/master/src/2_Post.jpg" title="Post"></td>
+    <td><img   width="225" height="385" src="https://raw.githubusercontent.com/BlueArduino20/ESP8266_WiFi_Captive_Portal/master/src/3_Pass.jpg" title="Creds"></td>
+  </tr>
+</table>
 
-<h2>"/Post":</h2>
-<img width="225" height="385" src="https://raw.githubusercontent.com/BlueArduino20/ESP8266_WiFi_Captive_Portal/master/src/2_Post.jpg" title="Post">
 
-<h2>"/Pass":</h2>
-<img width="225" height="385" src="https://raw.githubusercontent.com/BlueArduino20/ESP8266_WiFi_Captive_Portal/master/src/3_Pass.jpg" title="Pass">
