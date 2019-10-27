@@ -24,4 +24,5 @@ The internal LED will notify us, blinking 5 times, when a password is received.
   </tr>
 </table>
 
-
+## Disclaimer
+This project is for testing and educational purposes. Use it only against your own networks and devices. I don't take any responsibility for what you do with this program.
