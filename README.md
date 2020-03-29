@@ -28,7 +28,7 @@ The internal LED will notify us, blinking 5 times, when a password is received.
 
 1. Download <a href="https://github.com/nodemcu/nodemcu-flasher"><b>ESP8266 Flasher</b></a>.
 
-2. Download the <b><a href="https://github.com/BlueArduino20/ESP8266_WiFi_Captive_Portal_2.0/raw/master/SSID-Free_WiFi.bin">SSID-Free_WiFi.bin</b></a> file.
+2. Download the <b><a href="https://github.com/125K/ESP8266_WiFi_Captive_Portal/raw/master/WiFi_Captive_Portal_1.0.bin">WiFi_Captive_Portal_1.0.bin</b></a> file.
 
 3. Open the ESP8266 Flasher and select the Node MCU port
 
