@@ -21,7 +21,7 @@
 const byte HTTP_CODE = 200;
 const byte DNS_PORT = 53;
 const byte TICK_TIMER = 1000;
-IPAddress APIP(10, 10, 10, 1); // Gateway
+IPAddress APIP(172, 0, 0, 1); // Gateway
 
 String allPass="";
 unsigned long bootTime=0, lastActivity=0, lastTick=0, tickCtr=0;
