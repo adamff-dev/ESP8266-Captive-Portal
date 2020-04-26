@@ -11,7 +11,7 @@ The built-in LED will blink 5 times when a password is posted.
 
 # Walkthrough
 
-<a href="https://youtu.be/v4-5oX3RG94"><img src="https://raw.githubusercontent.com/125K/ESP8266_WiFi_Captive_Portal/master/src/walkthrough.gif"></a>
+<a target="_blank" href="https://youtu.be/v4-5oX3RG94"><img width="250px" src="https://raw.githubusercontent.com/125K/ESP8266_WiFi_Captive_Portal/master/src/walkthrough.gif"></a>
 
 # Screenshots
 
