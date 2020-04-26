@@ -1,7 +1,7 @@
 # ESP8266 WiFi Captive Portal
 WiFi captive portal for the NodeMCU (ESP8266 Module) with DNS spoofing.
 
-The internal LED will notify us, blinking 5 times, when a password is received.
+The built-in LED will blink 5 times when a password is posted.
 
 <b>Warning!</b> Your saved passwords will disappear when you restart/power off the ESP8266.
 
