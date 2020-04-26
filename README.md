@@ -9,6 +9,10 @@ The built-in LED will blink 5 times when a password is posted.
 
 <b>V. 2.0 (Fake register)</b>: https://github.com/125K/ESP8266_WiFi_Captive_Portal_2.0
 
+# Walkthrough
+
+<a href="https://youtu.be/v4-5oX3RG94"><img src="https://raw.githubusercontent.com/125K/ESP8266_WiFi_Captive_Portal/master/src/walkthrough.gif"></a>
+
 # Screenshots
 
 <table>
