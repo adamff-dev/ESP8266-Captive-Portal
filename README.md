@@ -7,7 +7,7 @@ The built-in LED will blink 5 times when a password is posted.
 
 <b>Note:</b> If you want to see the stored passwords go to "**172.0.0.1**<a>/pass</a>". For changing the SSID, go to "**172.0.0.1**<a>/ssid</a>"
 
-<b>V. 2.0 (Fake register)</b>: https://github.com/125K/ESP8266_WiFi_Captive_Portal_2.0
+<b>V. 2.0 (Fake sign in)</b>: https://github.com/125K/ESP8266_WiFi_Captive_Portal_2.0
 
 # Showcase
 
@@ -41,7 +41,7 @@ The built-in LED will blink 5 times when a password is posted.
 
 1. Download <a href="https://github.com/nodemcu/nodemcu-flasher"><b>ESP8266 Flasher</b></a>.
 
-2. Download the <b><a href="https://github.com/125K/ESP8266_WiFi_Captive_Portal/raw/master/release.bin">release.bin</b></a> file.
+2. Download the <b><a href="https://github.com/125K/ESP8266_WiFi_Captive_Portal/releases/download/1.0/release.bin">release.bin</b></a> file.
 
 3. Open the ESP8266 Flasher and select the Node MCU port
 
