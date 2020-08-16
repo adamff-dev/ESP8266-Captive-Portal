@@ -35,6 +35,8 @@ The built-in LED will blink 5 times when a password is posted.
   </tr>
 </table>
 
+Here you can donate if you liked my project and you want to support me:
+
 <a href="https://www.buymeacoffee.com/rSiZtB3" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 # Installation (ESP8266 Flasher - Easy way)
@@ -65,6 +67,14 @@ The built-in LED will blink 5 times when a password is posted.
 5. You can optionally change some parameters like the SSID name and texts of the page like title, subtitle, text body...
 6. Upload the code into your board.
 7. You are done!
+
+
+## Check out my other projects
+
+- **WiFi-Spam**: :email::satellite: Spam thousands of WiFi access points with custom SSIDs.
+  - https://github.com/125K/WiFi-Spam
+- **PwrDeauther**: :zap: Deauth a specific WiFi access point or an entire channel.
+  - https://github.com/125K/PwrDeauther
 
 ## Disclaimer
 This project is for testing and educational purposes. Use it only against your own networks and devices. I don't take any responsibility for what you do with this program.
