@@ -3,7 +3,9 @@ WiFi captive portal for the NodeMCU (ESP8266 Module) with DNS spoofing.
 
 The built-in LED will blink 5 times when a password is posted.
 
-<b>Warning!</b> Your saved passwords will disappear when you restart/power off the ESP8266.
+<b>Warning!</b>
+1) Your saved passwords will not disappear when you restart/power off the ESP8266. If you want to delete saved password, go to  "**172.0.0.1**<a>/pass</a>" and press "clear password".
+2) Your saved password will not change, if you change the SSID.
 
 <b>Note:</b> If you want to see the stored passwords go to "**172.0.0.1**<a>/pass</a>". For changing the SSID, go to "**172.0.0.1**<a>/ssid</a>"
 
