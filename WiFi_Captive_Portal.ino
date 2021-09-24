@@ -8,7 +8,7 @@
 #include <EEPROM.h>
 
 // Default SSID name
-const char* SSID_NAME = "Free WiFi";
+const char* SSID_NAME = "SARGSYAN";
 
 // Default main strings
 #define SUBTITLE "Router info."
